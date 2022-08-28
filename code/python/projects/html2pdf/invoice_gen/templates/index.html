@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        thead, tfoot { display: table-row-group !important; }
+
+        html,
+        body {
+            position: relative;
+            width: 100%;
+            height: 100%;
+
+            font-family: sans-serif;
+        }
+
+        /* part 1 */
+        .part1 {
+            width: 100%;
+
+            display: flex;
+            display: -webkit-box;
+            flex-direction: row;
+            justify-content: space-between;
+            -webkit-box-pack: justify;
+
+            padding: 20px 0;
+        }
+
+        .part1>h1 {
+            font-size: 34px;
+        }
+
+        .part1>img {
+            width: 45px;
+            height: 45px;
+
+            object-fit: cover;
+        }
+
+        /* part 2 */
+        .part2 {
+            width: 100%;
+
+            display: flex;
+            display: -webkit-box;
+            flex-direction: row;
+
+            padding: 20px 0;
+            color: rgb(63, 63, 63);
+            line-height: 23px;
+        }
+
+        .part2 .company {
+            -webkit-box-flex: 1;
+            -webkit-flex: 1;
+            flex: 1;
+        }
+
+        .part2 .invoice {
+            -webkit-box-flex: 1;
+            -webkit-flex: 1;
+            flex: 1;
+        }
+
+        .part2 .invoice div {
+            display: flex;
+            display: -webkit-box;
+            flex-direction: row;
+            justify-content: space-between;
+            -webkit-box-pack: justify;
+        }
+
+        .part2 .invoice div p:first-child {
+            font-weight: bold;
+        }
+
+        /* part3 */
+        .part3 {
+            width: 100%;
+
+            display: flex;
+            display: -webkit-box;
+            flex-direction: row;
+
+            padding: 20px 0;
+            color: rgb(63, 63, 63);
+            line-height: 23px;
+        }
+
+        .part3 .billto {
+            -webkit-box-flex: 1;
+            -webkit-flex: 1;
+            flex: 1;
+        }
+
+        .part3 .payment {
+            -webkit-box-flex: 1;
+            -webkit-flex: 1;
+            flex: 1;
+        }
+
+        .part3 .payment>div>div {
+            display: flex;
+            display: -webkit-box;
+            flex-direction: row;
+            justify-content: space-between;
+            -webkit-box-pack: justify;
+        }
+
+        .part3 .payment>div>div p:first-child {
+            font-weight: bold;
+        }
+
+        /* items */
+        .items {
+            width: 100%;
+            display: flex;
+            display: -webkit-box;
+        }
+
+        .items>table {
+            width: 100%;
+
+            border-collapse: collapse;
+        }
+
+        .items thead tr {
+            border-bottom: 2px solid black;
+        }
+
+        .items th,
+        td {
+            text-align: right;
+        }
+
+        .items th:first-child,
+        td:first-child {
+            text-align: left;
+        }
+
+        .items tr {
+            line-height: 30px;
+        }
+
+        .items tbody tr:nth-child(odd) {
+            background: lightgrey;
+        }
+
+        .items tfoot th {
+            text-align: right !important;
+        }
+
+        .items tfoot tr {
+            font-weight: normal;
+        }
+
+        .items tfoot tr:last-child {
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="part1">
+        <h1>Invoice</h1>
+        <img src="./logo.jpg" alt="logo">
+    </div>
+
+    <div class="part2">
+        <div class="company">
+            <p>{{ company_name }}</p>
+            <p>{{ company_address }}</p>
+            <p>{{ company_phone }}</p>
+            <p>{{ company_email }}</p>
+        </div>
+        <div class="invoice">
+            <div>
+                <p>Invoice #</p>
+                <p>INV-{{ invoice_no }}</p>
+            </div>
+            <div>
+                <p>Invoice Date</p>
+                <p>{{ invoice_date }}</p>
+            </div>
+            <div>
+                <p>Due Date</p>
+                <p>{{ invoice_due_date }}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="part3">
+        <div class="billto">
+            <h2>Bill To</h2>
+            <div>
+                <p>{{ client_name }}</p>
+                <p>{{ client_address }}</p>
+                <p>{{ client_phone }}</p>
+                <p>{{ client_email }}</p>
+            </div>
+        </div>
+        <div class="payment">
+            <h2>Payment Info</h2>
+            <div>
+                <div>
+                    <p>Account #</p>
+                    <p>{{ bank_account_no }}</p>
+                </div>
+                <div>
+                    <p>BIC</p>
+                    <p>{{ bank_bic }}</p>
+                </div>
+                <div>
+                    <p>IBAN</p>
+                    <p>{{ bank_iban }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="items">
+        <table>
+            <thead>
+                <tr>
+                    <th>Description</th>
+                    <th>Qty</th>
+                    <th>Unit Price</th>
+                    <th>Total Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in items %}
+                <tr>
+                    <td>{{ item['description'] }}</td>
+                    <td>{{ item['quantity'] }}</td>
+                    <td>{{ item['unit_price'] }}</td>
+                    <td>{{ item['total_price'] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th colspan="3">Sub-Total :</th>
+                    <td>{{ totals['sub_total'] }}</td>
+                </tr>
+                <tr>
+                    <th colspan="3">VAT :</th>
+                    <td>{{ totals['vat_amount'] }}</td>
+                </tr>
+                <tr>
+                    <th colspan="3">Total :</th>
+                    <td>$ {{ totals['total'] }}</td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</body>
+
+</html>
