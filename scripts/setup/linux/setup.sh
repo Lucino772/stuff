@@ -192,7 +192,7 @@ if [[ $do_install_git =~ ^[Yy]$ ]]; then
 fi
 
 # Zsh & oh-my-zsh
-read -p "Do you want to install zsh & oh-my-zsh ? (Y/n) " -n 1 -r do_install_zsh
+read -p "Do you want to install zsh & oh-my-posh ? (Y/n) " -n 1 -r do_install_zsh
 if [[ $do_install_zsh =~ ^[Yy]$ ]]; then
     install_zsh
     
