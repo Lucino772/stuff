@@ -1,0 +1,111 @@
+{
+  "$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
+  "blocks": [
+    {
+      "alignment": "left",
+      "segments": [
+        {
+          "type": "os",
+          "style": "plain",
+          "foreground": "#26C6DA",
+          "template": "{{ if .WSL }}WSL at {{ end }}{{.Icon}} "
+        },
+        {
+          "foreground": "#45F1C2",
+          "style": "plain",
+          "template": "{{ .UserName }} on",
+          "type": "session"
+        },
+        {
+          "foreground": "#0CA0D8",
+          "properties": {
+            "folder_separator_icon": "/",
+            "style": "full"
+          },
+          "style": "plain",
+          "template": " \uf07b {{ .Path }} ",
+          "type": "path"
+        },
+        {
+          "foreground": "#14A5AE",
+          "powerline_symbol": "\ue0b0",
+          "properties": {
+            "fetch_stash_count": true,
+            "fetch_upstream_icon": true
+          },
+          "style": "plain",
+          "template": "{{ .UpstreamIcon }}{{ .HEAD }}{{ if gt .StashCount 0 }} \uf692 {{ .StashCount }}{{ end }} ",
+          "type": "git"
+        }
+      ],
+      "type": "prompt"
+    },
+    {
+      "alignment": "right",
+      "segments": [
+        {
+          "type": "python",
+          "style": "plain",
+          "powerline_symbol": "\uE0B0",
+          "foreground": "#007ACC",
+          "template": "\uE235 {{ .Venv }} ",
+          "properties": {
+            "fetch_version": false
+          }
+        },
+        {
+          "type": "exit",
+          "style": "powerline",
+          "foreground": "#004675",
+          "foreground_templates": [
+            "{{ if gt .Code 0 }}#CD4277{{ end }}"
+          ],
+          "template": "[{{ .Code }}]",
+          "properties": {
+            "always_enabled": true
+          }
+        },
+        {
+          "type":"sysinfo",
+          "foreground": "#007ACC",
+          "template":" \uf85a {{ (div ((sub .PhysicalTotalMemory .PhysicalFreeMemory)|float64) 1000000000.0) }}/{{ (div .PhysicalTotalMemory 1000000000.0) }}GB",
+          "properties": {
+            "precision": 2
+          },
+          "style":"plain"
+        },
+        {
+          "type": "time",
+          "style": "plain",
+          "foreground": "#007ACC",
+          "template": " \uf64f {{ .CurrentDate | date .Format }}",
+          "properties": {
+            "time_format": "15:04:05"
+          }
+        }
+      ],
+      "type": "prompt",
+      "newline": false
+    },
+    {
+      "alignment": "left",
+      "newline": true,
+      "segments": [
+        {
+          "foreground": "#cd5e42",
+          "style": "plain",
+          "template": "\ue3bf ",
+          "type": "root"
+        },
+        {
+          "foreground": "#CD4277",
+          "style": "plain",
+          "template": "# ",
+          "type": "text"
+        }
+      ],
+      "type": "prompt"
+    }
+  ],
+  "version": 2
+}
