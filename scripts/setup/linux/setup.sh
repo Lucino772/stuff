@@ -5,7 +5,7 @@
 # 2. Install wget & curl
 # 3. Install Git
 # 4. Configure Git & GitHub SSH Keys
-# 5. Install Zsh & Oh-My-Zsh
+# 5. Install Zsh & Oh-My-Posh
 # 6. Install Pyenv, Pipx, Poetry & Pipenv
 # 7. Install Nvm
 
@@ -90,8 +90,23 @@ install_zsh () {
     echo "Setting Zsh as default shell"
     chsh -s $(which zsh)
     
-    echo "Installing oh-my-zsh"
-    sh -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+    # echo "Installing oh-my-zsh"
+    # sh -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+    echo "Installing & Configuring ohmyposh"
+    sudo wget https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/posh-linux-amd64 -O /usr/local/bin/oh-my-posh
+    sudo chmod +x /usr/local/bin/oh-my-posh
+
+    echo "Installing Nerd Fonts: JetBrainsMono"
+    sudo oh-my-posh font install JetBrainsMono
+
+    rcfile="${HOME}/.bashrc"
+    if [[ $do_install_zsh -eq "Y" || $do_install_zsh -eq "y" || $do_install_zsh -eq "" ]]; then
+        rcfile="${HOME}/.zshrc"
+    fi
+
+    echo "Writing configuration in $rcfile"
+    echo "# OhMyPosh" >> "$rcfile"
+    echo 'eval "$(oh-my-posh init zsh --config https://raw.githubusercontent.com/Lucino772/stuff/main/dotfiles/ohmyposh/lucino772.omp.json)"' >> "$rcfile"
 }
 
 
