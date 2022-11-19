@@ -31,9 +31,9 @@ setup_git () {
     echo "Configure Git & GitHub"
     read -p "Enter your GitHub username: " git_username
     read -p "Enter your GitHub email: " git_email
-    read -p "Do you want to configure an SSH key for GitHub (Y/n) ? " git_do_gen_ssh_key
+    read -p "Do you want to configure an SSH key for GitHub (Y/n) ? " -n 1 -r git_do_gen_ssh_key
 
-    if [[ $git_do_gen_ssh_key -eq "Y" || $git_do_gen_ssh_key -eq "y" || $git_do_gen_ssh_key -eq "" ]]; then
+    if [[ $git_do_gen_ssh_key =~ ^[Yy]$ ]]; then
         git_do_gen_ssh_key="true"
 
         git_ssh_gen_default_filename=$HOME/.ssh/id_ed25519
@@ -90,8 +90,6 @@ install_zsh () {
     echo "Setting Zsh as default shell"
     chsh -s $(which zsh)
     
-    # echo "Installing oh-my-zsh"
-    # sh -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
     echo "Installing & Configuring ohmyposh"
     sudo wget https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/posh-linux-amd64 -O /usr/local/bin/oh-my-posh
     sudo chmod +x /usr/local/bin/oh-my-posh
@@ -129,8 +127,8 @@ install_pyenv () {
     export PATH="$PYENV_ROOT/bin:$PATH"
     eval "$(pyenv init -)"
     
-    read -p "Do you want to install python now ? (Y/n) " do_install_python
-    if [[ $do_install_python -eq "Y" || $do_install_python -eq "y" || $do_install_python -eq "" ]]; then
+    read -p "Do you want to install python now ? (Y/n) " -n 1 -r do_install_python
+    if [[ $do_install_python =~ ^[Yy]$ ]]; then
         read -p "Which version of python ? (3.8.10)" python_version
         python_version=${python_version:-"3.8.10"}
         
@@ -143,19 +141,19 @@ install_pyenv () {
         pyenv install "$python_version"
         pyenv global "$python_version"
         
-        read -p "Do you want to install pipx ? (Y/n) " do_install_pipx
-        if [[ $do_install_pipx -eq "Y" || $do_install_pipx -eq "y" || $do_install_pipx -eq "" ]]; then
+        read -p "Do you want to install pipx ? (Y/n) " -n 1 -r do_install_pipx
+        if [[ $do_install_pipx =~ ^[Yy]$ ]]; then
             pip3 install --user pipx
             python3 -m pipx ensurepath
         fi
         
-        read -p "Do you want to install poetry ? (Y/n) " do_install_poetry
-        if [[ $do_install_poetry -eq "Y" || $do_install_poetry -eq "y" || $do_install_poetry -eq "" ]]; then
+        read -p "Do you want to install poetry ? (Y/n) " -n 1 -r do_install_poetry
+        if [[ $do_install_poetry =~ ^[Yy]$ ]]; then
             python3 -m pipx install poetry
         fi
         
-        read -p "Do you want to install pipenv ? (Y/n) " do_install_pipenv
-        if [[ $do_install_pipenv -eq "Y" || $do_install_pipenv -eq "y" || $do_install_pipenv -eq "" ]]; then
+        read -p "Do you want to install pipenv ? (Y/n) " -n 1 -r do_install_pipenv
+        if [[ $do_install_pipenv =~ ^[Yy]$ ]]; then
             python3 -m pipx install pipenv
         fi
     fi
@@ -187,29 +185,29 @@ echo "Installing wget & curl utilities"
 sudo apt install -y wget curl
 
 # Git & GitHub
-read -p "Do you want to install & configure Git ? (Y/n) " do_install_git
-if [[ $do_install_git -eq "Y" || $do_install_git -eq "y" || $do_install_git -eq "" ]]; then
+read -p "Do you want to install & configure Git ? (Y/n) " -n 1 -r do_install_git
+if [[ $do_install_git =~ ^[Yy]$ ]]; then
     install_git
     setup_git
 fi
 
 # Zsh & oh-my-zsh
-read -p "Do you want to install zsh & oh-my-zsh ? (Y/n) " do_install_zsh
-if [[ $do_install_zsh -eq "Y" || $do_install_zsh -eq "y" || $do_install_zsh -eq "" ]]; then
+read -p "Do you want to install zsh & oh-my-zsh ? (Y/n) " -n 1 -r do_install_zsh
+if [[ $do_install_zsh =~ ^[Yy]$ ]]; then
     install_zsh
     
     export SHELL=$(which zsh)
 fi
 
 # Python & Pyenv
-read -p "Do you want to install pyenv ? (Y/n) " do_install_pyenv
-if [[ $do_install_pyenv -eq "Y" || $do_install_pyenv -eq "y" || $do_install_pyenv -eq "" ]]; then
+read -p "Do you want to install pyenv ? (Y/n) " -n 1 -r do_install_pyenv
+if [[ $do_install_pyenv =~ ^[Yy]$ ]]; then
     install_pyenv
 fi
 
 # Node.js & Nvm
-read -p "Do you want to install nvm ? (Y/n) " do_install_nvm
-if [[ $do_install_nvm -eq "Y" || $do_install_nvm -eq "y" || $do_install_nvm -eq "" ]]; then
+read -p "Do you want to install nvm ? (Y/n) " -n 1 -r do_install_nvm
+if [[ $do_install_nvm =~ ^[Yy]$ ]]; then
     install_nvm
 fi
 
